@@ -1,0 +1,20 @@
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    # 먼저 해당 DB 생성해놓아야 DB 연결 가능. ? 이후 쿼리들은 옵션.
+    url: jdbc:mysql://127.0.0.1:3306/CRUD?useSSL=false&useUnicode=true&serverTimezone=Asia/Seoul&allowPublicKeyRetrieval=true
+    username: root
+    password: 12345678
+  jpa:
+    show-sql: true
+    hibernate:
+      # create 한 번 실행 후, update로 변경
+      ddl-auto: create
+    properties:
+      # 콘솔에 SQL 쿼리 출력
+      hibernate:
+        #        format_sql: true
+        dialect: org.hibernate.dialect.MySQL5Dialect
+logging:
+  level:
+    org.hibernate.SQL: debug
