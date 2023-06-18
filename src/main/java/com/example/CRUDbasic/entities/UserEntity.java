@@ -1,10 +1,7 @@
 package com.example.CRUDbasic.entities;
 
 import com.example.CRUDbasic.dto.UserDTO;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.hibernate.annotations.ColumnDefault;
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -20,7 +17,7 @@ import java.time.LocalDateTime;
 @AllArgsConstructor // 모든 필드 받는 생성자
 @NoArgsConstructor // 필드 아무것도 받지 않는 생성자
 @Builder
-@Data // @Getter + @Setter 인데 @Setter 안 쓰는 경우는 @Getter 만 해주는 것이 좋다 !
+@Data// @Getter + @Setter 인데 @Setter 안 쓰는 경우는 @Getter 만 해주는 것이 좋다 !
 public class UserEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY) // IDENTITY, SEQUENCE, TABLE 가 있는데 IDENTITY 는 자동 증가 옵션
