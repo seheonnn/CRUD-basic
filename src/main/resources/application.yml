@@ -13,8 +13,12 @@ spring:
     properties:
       # 콘솔에 SQL 쿼리 출력
       hibernate:
-        #        format_sql: true
+#        format_sql: true # hibernate 로그 형태
         dialect: org.hibernate.dialect.MySQL5Dialect
+        show_sql: false # hibernate 로그 남길지
+
 logging:
   level:
-    org.hibernate.SQL: debug
+    org.hibernate.SQL: OFF
+#    org.hibernate.SQL: DEBUG
+#    org.hibernate.SQL: TRACE

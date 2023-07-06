@@ -23,7 +23,6 @@ public class UserService {
     BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
 
     public UserEntity create(UserDTO user) {
-        log.info(String.valueOf(user));
         String encryptedPw = encoder.encode(user.getPassword());
         UserEntity newUser = UserEntity.builder()
                 .email(user.getEmail())

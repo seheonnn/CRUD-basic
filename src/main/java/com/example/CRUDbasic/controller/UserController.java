@@ -1,33 +1,49 @@
 package com.example.CRUDbasic.controller;
 
 import com.example.CRUDbasic.dto.UserDTO;
+import com.example.CRUDbasic.entities.LogEntity;
 import com.example.CRUDbasic.entities.UserEntity;
 import com.example.CRUDbasic.service.UserService;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
+import lombok.ToString;
 import lombok.extern.log4j.Log4j2;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.transaction.Transactional;
 import java.util.Optional;
 
-@Log4j2
+@Slf4j
 @RestController
 @RequiredArgsConstructor
-@RequestMapping(value = "/users")
+@RequestMapping(value = "/api/v1/users")
 public class UserController {
 
     @Autowired
     private UserService userService;
 
+
     // C
     @PostMapping("/create")
     public ResponseEntity<UserEntity> create(@RequestBody UserDTO user) {
-        log.info("dasdsadas");
-        return ResponseEntity.ok(userService.create(user));
+        log.info("GET /api/v1/users/create 요청처리 시작");
+        log.info("{}", new LogEntity(1L, "GET /api/v1/users/create", "요청처리 시작"));
+        UserEntity newUser = null;
+        try {
+            newUser = userService.create(user);
+        } catch (Exception e) {
+            log.error("에러 발생" + e);
+        }
+        log.info("GET /api/v1/users/create 요청처리 완료 > 생성된 유저 : {}", newUser);
+        return ResponseEntity.ok(newUser);
     }
 
     // R
