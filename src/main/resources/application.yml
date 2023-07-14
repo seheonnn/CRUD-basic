@@ -3,6 +3,7 @@ spring:
     driver-class-name: com.mysql.cj.jdbc.Driver
     # 먼저 해당 DB 생성해놓아야 DB 연결 가능. ? 이후 쿼리들은 옵션.
     url: jdbc:mysql://127.0.0.1:3306/CRUD?useSSL=false&useUnicode=true&serverTimezone=Asia/Seoul&allowPublicKeyRetrieval=true
+#    url: jdbc:mysql://43.202.94.140:3306/CRUD?useSSL=false&useUnicode=true&serverTimezone=Asia/Seoul&allowPublicKeyRetrieval=true
     username: root
     password: 12345678
   jpa:
