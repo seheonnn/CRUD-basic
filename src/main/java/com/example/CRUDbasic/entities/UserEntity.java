@@ -55,16 +55,16 @@ public class UserEntity {
         this.created_at = LocalDateTime.now();
     }
 
-    public UserDTO toDTO() {
-        return UserDTO.builder()
-                .email(email)
-                .password(password)
-                .name(name)
-                .status(status)
-                .role(role)
-                .created_at(created_at)
-                .updated_at(updated_at)
-                .build();
-    }
+//    public UserDTO toDTO() {
+//        return UserDTO.builder()
+//                .email(email)
+//                .password(password)
+//                .name(name)
+//                .status(status)
+//                .role(role)
+//                .created_at(created_at)
+//                .updated_at(updated_at)
+//                .build();
+//    }
 
 }

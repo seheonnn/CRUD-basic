@@ -39,15 +39,15 @@ public class UserDTO {
 
     private LocalDateTime updated_at;
 
-    public UserEntity toEntity() {
-        return UserEntity.builder()
-                .email(email)
-                .password(password)
-                .name(name)
-                .status(status)
-                .role(role)
-                .created_at(created_at)
-                .updated_at(updated_at)
-                .build();
-    }
+//    public UserEntity toEntity() {
+//        return UserEntity.builder()
+//                .email(email)
+//                .password(password)
+//                .name(name)
+//                .status(status)
+//                .role(role)
+//                .created_at(created_at)
+//                .updated_at(updated_at)
+//                .build();
+//    }
 }
