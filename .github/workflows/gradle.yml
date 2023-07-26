@@ -53,6 +53,16 @@ jobs:
       id: ip
       uses: haythem/public-ip@v1.2  
       
+      
+    # 디버깅을 위해 AWS CLI 버전 확인
+    - name: Check AWS CLI Version
+      run: aws --version
+
+    # AWS CLI 디버깅을 위해 환경 변수 출력
+    - name: Print Environment Variables
+      run: printenv 
+      
+      
     # Add github ip to AWS
     - name: Add GitHub IP to AWS
       run: |
