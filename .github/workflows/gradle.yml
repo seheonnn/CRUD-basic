@@ -46,7 +46,7 @@ jobs:
         host: ${{ secrets.HOST }} # EC2 인스턴스 퍼블릭 DNS
         username: ubuntu
         key: ${{ secrets.PRIVATE_KEY }} # pem 키
-        port: ${{ secrets.SSH_PORT }}
+        
         # 도커 작업
         script: |
           docker pull ${{ secrets.DOCKER_USERNAME }}/sejongmate:latest
