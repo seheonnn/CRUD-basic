@@ -35,7 +35,7 @@ jobs:
     
     # Docker 이미지 Build (2)
     - name: docker image build
-      run: sudo docker build . -t ${{ secrets.DOCKER_USERNAME }}/spring-docker --platform linux/amd64 .
+      run: docker build -t ${{ secrets.DOCKER_USERNAME }}/spring-docker . #image명 기입
     
     # DockerHub Login (3)
     - name: docker login 
@@ -78,7 +78,7 @@ jobs:
         script: |
           sudo docker stop boot-prac-ci
           sudo docker rm boot-prac-ci
-          sudo docker run -p 50000:8080 -v $(pwd):/usr/src/app ${{ secrets.DOCKER_USERNAME }}/spring-docker
+          sudo docker run -d --log-driver=syslog -p 8080:8080 -v ${{ secrets.DOCKER_USERNAME }}:/app ${{ secrets.DOCKER_USERNAME }}/spring-docker
 
    
    # REMOVE Github IP FROM security group (9)
