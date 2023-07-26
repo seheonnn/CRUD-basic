@@ -78,7 +78,8 @@ jobs:
         script: |
           sudo docker stop boot-prac-ci
           sudo docker rm boot-prac-ci
-          sudo docker run -it -d -p 8080:8080 --name boot-prac-ci ${{ secrets.DOCKER_USERNAME }}/spring-docker
+          sudo docker run -d --log-driver=syslog -p 50000:8080 -v ${{ secrets.DOCKER_USERNAME }}:/app ${{ secrets.DOCKER_USERNAME }}/spring-docker
+
    
    # REMOVE Github IP FROM security group (9)
     - name: Remove IP FROM security group
