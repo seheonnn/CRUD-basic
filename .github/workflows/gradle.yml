@@ -48,7 +48,7 @@ jobs:
 
     # Docker Hub push (4)
     - name: docker Hub push
-      run: sudo docker push ${{ secrets.DOCKER_USERNAME }}/spring-docker
+      run: docker push ${{ secrets.DOCKER_USERNAME }}/spring-docker
       
     # GET GitHub IP
     - name: Get GitHub IP 
