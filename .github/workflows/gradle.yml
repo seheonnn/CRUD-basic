@@ -37,7 +37,7 @@ jobs:
         
     # Build Context로 사용할 디렉토리로 이동
     - name: Change to build directory
-      run: cd YOUR_PROJECT_DIRECTORY
+      run: cd .
       
     # 빌드할 JAR 파일을 Build Context로 복사
     - name: Copy JAR to Build Context
