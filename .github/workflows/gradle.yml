@@ -34,7 +34,7 @@ jobs:
         ./gradlew clean
         echo "Running ./gradlew build -x test"
         ./gradlew build -x test
-      
+        
     # Github Actions에서 Docker 빌드 스크립트 예시
     - name: Docker build and push
       run: |
@@ -44,7 +44,6 @@ jobs:
         cp ../build/libs/*.jar ./
         # Docker 이미지 빌드
         sudo docker build --no-cache -t ${{ secrets.DOCKER_USERNAME }}/spring-docker .
-
 
     # DockerHub Login (3)
     - name: docker login 
