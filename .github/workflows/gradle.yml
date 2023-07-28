@@ -70,7 +70,6 @@ jobs:
         
         # 도커 작업
         script: |
-          sudo docker stop spring-docker
           sudo docker rmi spring-docker
           sudo docker run -it -d -p 8080:8080 --name spring-docker ${{ secrets.DOCKER_USERNAME }}/spring-docker
 
