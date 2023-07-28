@@ -35,15 +35,18 @@ jobs:
         echo "Running ./gradlew build -x test"
         ./gradlew build -x test
         
-    # Github Actions에서 Docker 빌드 스크립트 예시
-    - name: Docker build and push
-      run: |
-        # Build Context로 사용할 디렉토리로 이동
-        cd docker/
-        # 빌드할 JAR 파일을 Build Context로 복사
-        cp ../build/libs/*.jar ./
-        # Docker 이미지 빌드
-        sudo docker build --no-cache -t ${{ secrets.DOCKER_USERNAME }}/spring-docker .
+    # Build Context로 사용할 디렉토리로 이동
+    - name: Change to build directory
+      run: cd YOUR_PROJECT_DIRECTORY
+      
+    # 빌드할 JAR 파일을 Build Context로 복사
+    - name: Copy JAR to Build Context
+      run: cp build/libs/*.jar ./
+    
+    # Docker 이미지 Build
+    - name: docker image build
+      run: sudo docker build --no-cache -t ${{ secrets.DOCKER_USERNAME }}/spring-docker .
+    
 
     # DockerHub Login (3)
     - name: docker login 
