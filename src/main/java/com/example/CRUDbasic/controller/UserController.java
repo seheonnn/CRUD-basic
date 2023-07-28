@@ -27,9 +27,7 @@ import java.util.Optional;
 @RequestMapping(value = "/api/v1/users")
 public class UserController {
 
-    @Autowired
-    private UserService userService;
-
+    private final UserService userService;
 
     // C
     @PostMapping("/create")
