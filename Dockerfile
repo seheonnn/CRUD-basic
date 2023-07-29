@@ -7,7 +7,7 @@ WORKDIR /usr/src/app
 ARG JAR_PATH=./build/libs
 
 # 빌드한 jar 파일을 Docker 컨테이너 내부로 옮겨줌.
-#COPY ${JAR_PATH}/CRUD-basic-0.0.1-SNAPSHOT.jar ${JAR_PATH}/CRUD-basic-0.0.1-SNAPSHOT.jar
+COPY ${JAR_PATH}/CRUD-basic-0.0.1-SNAPSHOT.jar ${JAR_PATH}/CRUD-basic-0.0.1-SNAPSHOT.jar
 
 # 문제점 : COPY 의 경우 코드 변경 시 jar 파일 빌드, Docker 이미지 생성, 실행까지 모두 해주어야 함. 비효율적
 # 도커 이미지 실행시 -v (Volume 옵션) 사용함으로써 실행에 필요한 파일들을 컨테이너 내부에서 직접 접근.
