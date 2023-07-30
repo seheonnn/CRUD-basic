@@ -33,7 +33,7 @@ jobs:
         echo "Running ./gradlew clean"
         ./gradlew clean
         echo "Running ./gradlew build -x test"
-        ./gradlew build -x test
+        ./gradlew build
       
       # Docker 이미지 Build (2)
     - name: docker image build
