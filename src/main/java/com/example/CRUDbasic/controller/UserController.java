@@ -23,7 +23,7 @@ public class UserController {
 
     // C
     @PostMapping("/create")
-    public ResponseEntity<String> create(@RequestBody UserDTO user) {
+    public ResponseEntity<UserEntity> create(@RequestBody UserDTO user) {
         log.info("GET /api/v1/users/create 요청처리 시작");
         log.info("{}", new LogEntity(1L, "GET /api/v1/users/create", "요청처리 시작"));
         UserEntity newUser = null;
@@ -33,7 +33,8 @@ public class UserController {
             log.error("에러 발생" + e);
         }
         log.info("GET /api/v1/users/create 요청처리 완료 > 생성된 유저 : {}", newUser);
-        return ResponseEntity.ok("유저 생성 완료.");
+//        return ResponseEntity.ok("유저 생성 완료.");
+        return ResponseEntity.ok(newUser);
     }
 
     // R
