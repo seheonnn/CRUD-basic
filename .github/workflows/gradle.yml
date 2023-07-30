@@ -37,7 +37,8 @@ jobs:
       
       # Docker 이미지 Build (2)
     - name: docker image build
-      run: sudo docker build -t seheon/spring-docker . #image명 기입
+      run: docker build -t seheon/spring-docker --build-arg JAR_FILE=builds/libs/CRUD-basic-0.0.1-SNAPSHOT.jar .
+      # run: sudo docker build -t seheon/spring-docker . #image명 기입
 
     # DockerHub Login (3)
     - name: docker login 
