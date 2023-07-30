@@ -34,21 +34,11 @@ jobs:
         ./gradlew clean
         echo "Running ./gradlew build -x test"
         ./gradlew build -x test
-        
-    # Build Context로 사용할 디렉토리로 이동
-    - name: Change to build directory
-      run: cd .
-      
-    # 빌드할 JAR 파일을 Build Context로 복사
-    - name: Copy JAR to Build Context
-      run: cp build/libs/*.jar ./
-    
     
     # Docker 이미지 Build (2)
     - name: docker image build
-      run: docker build -t ${{ secrets.DOCKER_USERNAME }}/spring-docker . #image명 기입
+      run: sudo docker build -t ${{ secrets.DOCKER_USERNAME }}/spring-docker . #image명 기입
     
-
     # DockerHub Login (3)
     - name: docker login 
       uses: docker/login-action@v2
@@ -59,7 +49,6 @@ jobs:
     # Docker Hub push (4)
     - name: docker Hub push
       run: docker push ${{ secrets.DOCKER_USERNAME }}/spring-docker
-    
       
     # AWS EC2 Server Connect & Docker 명령어 실행 (8)
     - name: Deploy
@@ -71,8 +60,6 @@ jobs:
         
         # 도커 작업
         script: |
-          docker stop spring-docker
-          docker rm spring-docker
-          docker run -it -d -p 8080:8080 --name spring-docker ${{ secrets.DOCKER_USERNAME }}/spring-docker
-
-  
+          sudo docker stop spring-docker
+          sudo docker rm spring-docker
+          sudo docker run -d --name spring-docker --log-driver=syslog -p 8080:8080 -v ${{ secrets.DOCKER_USERNAME }}:/app ${{ secrets.DOCKER_USERNAME }}/spring-docker
