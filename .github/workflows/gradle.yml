@@ -37,8 +37,8 @@ jobs:
       
       # Docker 이미지 Build (2)
     - name: docker image build
-      run: docker build -t ${{ secrets.DOCKER_USERNAME }}/spring-docker --no-cache --build-arg JAR_FILE=build/libs/CRUD-basic-0.0.1-SNAPSHOT.jar .
-      # run: sudo docker build -t ${{ secrets.DOCKER_USERNAME }}/spring-docker . #image명 기입
+#       run: docker build -t ${{ secrets.DOCKER_USERNAME }}/spring-docker --no-cache --build-arg JAR_FILE=build/libs/CRUD-basic-0.0.1-SNAPSHOT.jar .
+      run: docker build -t ${{ secrets.DOCKER_USERNAME }}/spring-docker . #image명 기입
 
 
     # DockerHub Login (3)
