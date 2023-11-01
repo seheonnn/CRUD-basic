@@ -35,19 +35,22 @@ public class UserService {
         return userRepository.saveAndFlush(newUser);
     }
 
-    public Optional<UserEntity> read(UserDTO user, HttpServletRequest request) {
+    public UserEntity read(UserDTO user, HttpServletRequest request) throws Exception {
         String email = request.getHeader("email"); // Header 에서 email 이라는 Key 의 Value 를 가져옴. 보통 JWT 토큰 사용
         // 방법 1. email 로 UserEntity 찾기
         log.info("========================================");
         log.info(email);
         log.info(String.valueOf(userRepository.findByEmail(email))); // log.info() 는 @Slf4j 에서 지원. log.info() 안에는 String 만 가능
+        UserEntity newUser = userRepository.findByEmail(email).orElseThrow(() -> new Exception("해당 사용자를 찾을 수 없습니다"));
         log.info("========================================");
         // 방법 2. userId 로 UserEntity 찾기
-        return userRepository.findById(user.getUserId());
+        userRepository.findById(user.getUserId());
+
+        return newUser;
     }
 
-    public UserEntity update(UserDTO user) throws Exception {
-        UserEntity userEntity = userRepository.findById(user.getUserId()).orElseThrow(() -> new Exception("해당 사용자를 찾을 수 없습니다"));
+    public UserEntity update(Long userId, UserDTO user) throws Exception {
+        UserEntity userEntity = userRepository.findById(userId).orElseThrow(() -> new Exception("해당 사용자를 찾을 수 없습니다"));
         if (user.getName() != null) {
             userEntity.setName(user.getName());
         }
@@ -58,14 +61,14 @@ public class UserService {
         return userRepository.saveAndFlush(userEntity);
     }
 
-    public UserEntity delete1(UserDTO user) throws Exception {
-        UserEntity userEntity = userRepository.findById(user.getUserId()).orElseThrow(() -> new Exception("해당 사용자를 찾을 수 없습니다"));
+    public UserEntity delete1(Long userId) throws Exception {
+        UserEntity userEntity = userRepository.findById(userId).orElseThrow(() -> new Exception("해당 사용자를 찾을 수 없습니다"));
         userEntity.setStatus('D');
         return userRepository.saveAndFlush(userEntity);
     }
 
-    public HttpStatus delete2(UserDTO user) throws Exception {
-        UserEntity userEntity = userRepository.findById(user.getUserId()).orElseThrow(() -> new Exception("해당 사용자를 찾을 수 없습니다"));
+    public HttpStatus delete2(Long userId) throws Exception {
+        UserEntity userEntity = userRepository.findById(userId).orElseThrow(() -> new Exception("해당 사용자를 찾을 수 없습니다"));
         userRepository.delete(userEntity);
         return HttpStatus.OK;
     }
