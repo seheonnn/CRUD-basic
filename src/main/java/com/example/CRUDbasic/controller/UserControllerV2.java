@@ -12,13 +12,12 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.Optional;
 
 @Slf4j
 @RestController
 @RequiredArgsConstructor
-@RequestMapping(value = "/api/v1/users")
-public class UserController {
+@RequestMapping(value = "/api/v2/users")
+public class UserControllerV2 {
     private final UserService userService;
 //    @Autowired
 //    private UserService userService;
@@ -63,5 +62,4 @@ public class UserController {
     public ResponseEntity<HttpStatus> delete2(@PathVariable Long userId) throws Exception {
         return ResponseEntity.ok(userService.delete2(userId));
     }
-
 }

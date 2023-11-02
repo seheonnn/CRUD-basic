@@ -12,12 +12,11 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.Optional;
 
 @Slf4j // 로그 확인 위한 어노테이션
 @Service
 @RequiredArgsConstructor
-public class UserService {
+public class UserServiceV2 {
     private final UserRepository userRepository;
 //    @Autowired
 //    private UserRepository userRepository;
