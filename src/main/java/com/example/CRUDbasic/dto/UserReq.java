@@ -6,8 +6,8 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 public class UserReq {
-    @NoArgsConstructor
-    @AllArgsConstructor
+//    @NoArgsConstructor
+//    @AllArgsConstructor
     @Getter
     @Setter
     public static class UserJoinReq {
@@ -15,5 +15,4 @@ public class UserReq {
         private String password;
         private String name;
     }
-
 }

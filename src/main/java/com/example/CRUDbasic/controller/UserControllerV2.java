@@ -1,12 +1,13 @@
 package com.example.CRUDbasic.controller;
 
 import com.example.CRUDbasic.dto.UserDTO;
+import com.example.CRUDbasic.dto.UserReq;
+import com.example.CRUDbasic.dto.UserRes;
 import com.example.CRUDbasic.entities.LogEntity;
 import com.example.CRUDbasic.entities.UserEntity;
-import com.example.CRUDbasic.service.UserService;
+import com.example.CRUDbasic.service.UserServiceV2;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -18,30 +19,25 @@ import javax.servlet.http.HttpServletRequest;
 @RequiredArgsConstructor
 @RequestMapping(value = "/api/v2/users")
 public class UserControllerV2 {
-    private final UserService userService;
+    private final UserServiceV2 userService;
 //    @Autowired
 //    private UserService userService;
 
     // C
     @PostMapping("/create")
-    public ResponseEntity<UserEntity> create(@RequestBody UserDTO user) {
+    public ResponseEntity<UserRes.UserJoinRes> create(@RequestBody UserReq.UserJoinReq userJoinReq) {
         log.info("GET /api/v1/users/create 요청처리 시작");
         log.info("{}", new LogEntity(1L, "GET /api/v1/users/create", "요청처리 시작"));
-        UserEntity newUser = null;
-        try {
-            newUser = userService.create(user);
-        } catch (Exception e) {
-            log.error("에러 발생" + e);
-        }
-        log.info("GET /api/v1/users/create 요청처리 완료 > 생성된 유저 : {}", newUser);
+        UserRes.UserJoinRes userJoinRes = userService.create(userJoinReq);
+        log.info("GET /api/v1/users/create 요청처리 완료 > 생성된 유저 : {}", userJoinRes);
 //        return ResponseEntity.ok("유저 생성 완료.");
-        return ResponseEntity.ok(newUser);
+        return ResponseEntity.ok(userJoinRes);
     }
 
     // R
-    @GetMapping("")
-    public ResponseEntity<UserEntity> read(@RequestBody UserDTO user, HttpServletRequest request) throws Exception {
-        return ResponseEntity.ok(userService.read(user, request));
+    @GetMapping("/{userId}")
+    public ResponseEntity<UserRes.UserJoinRes> read(@PathVariable Long userId, HttpServletRequest request) throws Exception {
+        return ResponseEntity.ok(userService.read(userId, request));
     }
 
     // U

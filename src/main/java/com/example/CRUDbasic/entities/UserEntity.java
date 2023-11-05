@@ -1,5 +1,6 @@
 package com.example.CRUDbasic.entities;
 
+import com.example.CRUDbasic.config.RoleType;
 import com.example.CRUDbasic.dto.UserDTO;
 import lombok.*;
 import org.hibernate.annotations.ColumnDefault;
@@ -41,7 +42,7 @@ public class UserEntity {
     private char status;
 
     @Column(name = "role", nullable = false) // User, Guest
-    private String role;
+    private RoleType role;
 
     @Column(name = "created_at", nullable = false)
     @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss")

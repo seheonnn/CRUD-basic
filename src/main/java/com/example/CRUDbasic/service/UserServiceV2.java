@@ -2,16 +2,18 @@ package com.example.CRUDbasic.service;
 
 import com.example.CRUDbasic.config.RoleType;
 import com.example.CRUDbasic.dto.UserDTO;
+import com.example.CRUDbasic.dto.UserReq;
+import com.example.CRUDbasic.dto.UserRes;
 import com.example.CRUDbasic.entities.UserEntity;
 import com.example.CRUDbasic.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.Optional;
 
 @Slf4j // 로그 확인 위한 어노테이션
 @Service
@@ -23,31 +25,31 @@ public class UserServiceV2 {
 
     BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
 
-    public UserEntity create(UserDTO user) {
-        String encryptedPw = encoder.encode(user.getPassword());
+    public UserRes.UserJoinRes create(UserReq.UserJoinReq userJoinReq) {
+        String encryptedPw = encoder.encode(userJoinReq.getPassword());
         UserEntity newUser = UserEntity.builder()
-                .email(user.getEmail())
+                .email(userJoinReq.getEmail())
                 .password(encryptedPw)
-                .name(user.getName())
+                .name(userJoinReq.getName())
                 .status('A')
-                .role(String.valueOf(RoleType.USER))
+                .role(RoleType.USER)
                 .build();
 
-        return userRepository.saveAndFlush(newUser);
+        userRepository.saveAndFlush(newUser);
+
+        return new UserRes.UserJoinRes(newUser);
     }
 
-    public UserEntity read(UserDTO user, HttpServletRequest request) throws Exception {
+    public UserRes.UserJoinRes read(Long userId, HttpServletRequest request) throws Exception {
+        // 방법 1. email header 에서 추출하여 UserEntity 찾기
         String email = request.getHeader("email"); // Header 에서 email 이라는 Key 의 Value 를 가져옴. 보통 JWT 토큰 사용
-        // 방법 1. email 로 UserEntity 찾기
-        log.info("========================================");
-        log.info(email);
-        log.info(String.valueOf(userRepository.findByEmail(email))); // log.info() 는 @Slf4j 에서 지원. log.info() 안에는 String 만 가능
         UserEntity newUser = userRepository.findByEmail(email).orElseThrow(() -> new Exception("해당 사용자를 찾을 수 없습니다"));
-        log.info("========================================");
-        // 방법 2. userId 로 UserEntity 찾기
-        userRepository.findById(user.getUserId());
+        log.info(email); // 추출한 email 확인
 
-        return newUser;
+        // 방법 2. userId 로 UserEntity 찾기
+//        UserEntity newUser = userRepository.findById(userId).orElseThrow(() -> new Exception("해당 사용자를 찾을 수 없습니다"));
+
+        return new UserRes.UserJoinRes(newUser);
     }
 
     public UserEntity update(Long userId, UserDTO user) throws Exception {

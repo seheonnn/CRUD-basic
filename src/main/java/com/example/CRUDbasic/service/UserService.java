@@ -31,7 +31,7 @@ public class UserService {
                 .password(encryptedPw)
                 .name(user.getName())
                 .status('A')
-                .role(String.valueOf(RoleType.USER))
+                .role(RoleType.USER)
                 .build();
 
         return userRepository.saveAndFlush(newUser);
