@@ -1,7 +1,6 @@
 package com.example.CRUDbasic.service;
 
 import com.example.CRUDbasic.config.RoleType;
-import com.example.CRUDbasic.dto.UserDTO;
 import com.example.CRUDbasic.dto.UserReq;
 import com.example.CRUDbasic.dto.UserRes;
 import com.example.CRUDbasic.entities.UserEntity;
@@ -13,7 +12,6 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.Optional;
 
 @Slf4j // 로그 확인 위한 어노테이션
 @Service
@@ -35,9 +33,7 @@ public class UserServiceV2 {
                 .role(RoleType.USER)
                 .build();
 
-        userRepository.saveAndFlush(newUser);
-
-        return new UserRes.UserJoinRes(newUser);
+        return new UserRes.UserJoinRes(userRepository.saveAndFlush(newUser));
     }
 
     public UserRes.UserJoinRes read(Long userId, HttpServletRequest request) throws Exception {
@@ -52,16 +48,17 @@ public class UserServiceV2 {
         return new UserRes.UserJoinRes(newUser);
     }
 
-    public UserEntity update(Long userId, UserDTO user) throws Exception {
+    public UserRes.UserJoinRes update(Long userId, UserReq.UserUpdateReq userUpdateReq) throws Exception {
         UserEntity userEntity = userRepository.findById(userId).orElseThrow(() -> new Exception("해당 사용자를 찾을 수 없습니다"));
-        if (user.getName() != null) {
-            userEntity.setName(user.getName());
+        if (userUpdateReq.getName() != null) {
+            userEntity.setName(userUpdateReq.getName());
         }
-        if (user.getPassword() != null) {
-            String encryptedPw = encoder.encode(user.getPassword());
+        if (userUpdateReq.getPassword() != null) {
+            String encryptedPw = encoder.encode(userUpdateReq.getPassword());
             userEntity.setPassword(encryptedPw);
         }
-        return userRepository.saveAndFlush(userEntity);
+
+        return new UserRes.UserJoinRes(userRepository.saveAndFlush(userEntity));
     }
 
     public UserEntity delete1(Long userId) throws Exception {

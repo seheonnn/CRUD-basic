@@ -12,7 +12,14 @@ public class UserReq {
     @Setter
     public static class UserJoinReq {
         private String email;
-        private String password;
         private String name;
+        private String password;
+    }
+
+    @Getter
+    @Setter
+    public static class UserUpdateReq {
+        private String name;
+        private String password;
     }
 }

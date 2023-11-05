@@ -26,10 +26,10 @@ public class UserControllerV2 {
     // C
     @PostMapping("/create")
     public ResponseEntity<UserRes.UserJoinRes> create(@RequestBody UserReq.UserJoinReq userJoinReq) {
-        log.info("GET /api/v1/users/create 요청처리 시작");
+        log.info("GET /api/v2/users/create 요청처리 시작");
         log.info("{}", new LogEntity(1L, "GET /api/v1/users/create", "요청처리 시작"));
         UserRes.UserJoinRes userJoinRes = userService.create(userJoinReq);
-        log.info("GET /api/v1/users/create 요청처리 완료 > 생성된 유저 : {}", userJoinRes);
+        log.info("GET /api/v2/users/create 요청처리 완료 > 생성된 유저 : {}", userJoinRes);
 //        return ResponseEntity.ok("유저 생성 완료.");
         return ResponseEntity.ok(userJoinRes);
     }
@@ -42,8 +42,8 @@ public class UserControllerV2 {
 
     // U
     @PostMapping("/{userId}/update")
-    public ResponseEntity<UserEntity> update(@PathVariable Long userId, @RequestBody UserDTO user) throws Exception {
-        return ResponseEntity.ok(userService.update(userId, user));
+    public ResponseEntity<UserRes.UserJoinRes> update(@PathVariable Long userId, @RequestBody UserReq.UserUpdateReq userUpdateReq) throws Exception {
+        return ResponseEntity.ok(userService.update(userId, userUpdateReq));
     }
 
     // D - status 변경 방식. 회원 정보 유지한 상태로 재가입 가능.
