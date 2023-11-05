@@ -61,10 +61,10 @@ public class UserServiceV2 {
         return new UserRes.UserJoinRes(userRepository.saveAndFlush(userEntity));
     }
 
-    public UserEntity delete1(Long userId) throws Exception {
+    public UserRes.UserJoinRes delete1(Long userId) throws Exception {
         UserEntity userEntity = userRepository.findById(userId).orElseThrow(() -> new Exception("해당 사용자를 찾을 수 없습니다"));
         userEntity.setStatus('D');
-        return userRepository.saveAndFlush(userEntity);
+        return new UserRes.UserJoinRes(userRepository.saveAndFlush(userEntity));
     }
 
     public HttpStatus delete2(Long userId) throws Exception {

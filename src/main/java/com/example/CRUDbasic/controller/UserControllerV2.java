@@ -1,10 +1,8 @@
 package com.example.CRUDbasic.controller;
 
-import com.example.CRUDbasic.dto.UserDTO;
 import com.example.CRUDbasic.dto.UserReq;
 import com.example.CRUDbasic.dto.UserRes;
 import com.example.CRUDbasic.entities.LogEntity;
-import com.example.CRUDbasic.entities.UserEntity;
 import com.example.CRUDbasic.service.UserServiceV2;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -49,7 +47,7 @@ public class UserControllerV2 {
     // D - status 변경 방식. 회원 정보 유지한 상태로 재가입 가능.
     // but, 회원 정보를 사용하는 다른 기능들에서 해당 회원의 status 가 활성 상태인지 확인하는 로직 필요
     @PostMapping("/{userId}/delete1")
-    public ResponseEntity<UserEntity> delete1(@PathVariable Long userId) throws Exception {
+    public ResponseEntity<UserRes.UserJoinRes> delete1(@PathVariable Long userId) throws Exception {
         return ResponseEntity.ok(userService.delete1(userId));
     }
 
