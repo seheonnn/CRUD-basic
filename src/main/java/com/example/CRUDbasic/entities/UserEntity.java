@@ -19,7 +19,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor // 필드 아무것도 받지 않는 생성자
 @Builder
 @Data// @Getter + @Setter 인데 @Setter 안 쓰는 경우는 @Getter 만 해주는 것이 좋다 !
-public class UserEntity {
+public class UserEntity extends BaseEntity{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY) // IDENTITY, SEQUENCE, TABLE 가 있는데 IDENTITY 는 자동 증가 옵션
     private Long userId;
@@ -41,20 +41,9 @@ public class UserEntity {
     @ColumnDefault("'A'") // A: 활성 유저 D: 탈퇴 유저
     private char status;
 
+    @Enumerated(EnumType.STRING)
     @Column(name = "role", nullable = false) // User, Guest
     private RoleType role;
-
-    @Column(name = "created_at", nullable = false)
-    @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss")
-    private LocalDateTime created_at;
-
-    @Column(name = "updated_at", nullable = true)
-    private LocalDateTime updated_at;
-
-    @PrePersist // created_at 자동 생성
-    public void create_at(){
-        this.created_at = LocalDateTime.now();
-    }
 
 //    public UserDTO toDTO() {
 //        return UserDTO.builder()
