@@ -3,7 +3,8 @@ package com.example.CRUDbasic.controller;
 import com.example.CRUDbasic.dto.UserReq;
 import com.example.CRUDbasic.dto.UserRes;
 import com.example.CRUDbasic.entities.LogEntity;
-import com.example.CRUDbasic.service.UserServiceV2;
+import com.example.CRUDbasic.global.BaseException;
+import com.example.CRUDbasic.service.UserServiceV3;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -15,19 +16,19 @@ import javax.servlet.http.HttpServletRequest;
 @Slf4j
 @RestController
 @RequiredArgsConstructor
-@RequestMapping(value = "/api/v2/users") // V2 : Request, Response DTO 이용
-public class UserControllerV2 {
-    private final UserServiceV2 userService;
+@RequestMapping(value = "/api/v3/users") // V3 : Response 객체, Exception Handler 추가
+public class UserControllerV3 {
+    private final UserServiceV3 userService;
 //    @Autowired
 //    private UserService userService;
 
     // C
     @PostMapping("/create")
-    public ResponseEntity<UserRes.UserJoinRes> create(@RequestBody UserReq.UserJoinReq userJoinReq) {
-        log.info("GET /api/v2/users/create 요청처리 시작");
+    public ResponseEntity<UserRes.UserJoinRes> create(@RequestBody UserReq.UserJoinReq userJoinReq) throws BaseException {
+        log.info("GET /api/v3/users/create 요청처리 시작");
         log.info("{}", new LogEntity(1L, "GET /api/v1/users/create", "요청처리 시작"));
         UserRes.UserJoinRes userJoinRes = userService.create(userJoinReq);
-        log.info("GET /api/v2/users/create 요청처리 완료 > 생성된 유저 : {}", userJoinRes);
+        log.info("GET /api/v3/users/create 요청처리 완료 > 생성된 유저 : {}", userJoinRes);
 //        return ResponseEntity.ok("유저 생성 완료.");
         return ResponseEntity.ok(userJoinRes);
     }

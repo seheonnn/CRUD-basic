@@ -4,6 +4,7 @@ import com.example.CRUDbasic.config.RoleType;
 import com.example.CRUDbasic.dto.UserReq;
 import com.example.CRUDbasic.dto.UserRes;
 import com.example.CRUDbasic.entities.UserEntity;
+import com.example.CRUDbasic.global.BaseException;
 import com.example.CRUDbasic.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -13,17 +14,28 @@ import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpServletRequest;
 
+import static com.example.CRUDbasic.global.BaseResponseStatus.*;
+
 @Slf4j // 로그 확인 위한 어노테이션
 @Service
-@RequiredArgsConstructor // V2 : Request, Response DTO 이용
-public class UserServiceV2 {
+@RequiredArgsConstructor // V3 : Response 객체, Exception Handler 추가
+public class UserServiceV3 {
     private final UserRepository userRepository;
 //    @Autowired
 //    private UserRepository userRepository;
 
+//    static final String PASSWORD_PATTERN = "^(?=.*[a-z])(?=.*[A-Z]+)(?=.*\\d)(?=.*[!@#$%^&*]).{8,64}$"; // 8자 이상 64자 이하, 대소문자, 특수문자 각각 한 번씩 포함
+    private static final String EMAIL_PATTERN = "^.{5,254}$|^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+.[A-Za-z]{2,6}$\n";
+
     BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
 
-    public UserRes.UserJoinRes create(UserReq.UserJoinReq userJoinReq) {
+    public UserRes.UserJoinRes create(UserReq.UserJoinReq userJoinReq) throws BaseException {
+        if(!userJoinReq.getEmail().matches(EMAIL_PATTERN))
+            throw new BaseException(POST_USERS_INVALID_EMAIL);
+//        if(!userJoinReq.getPassword().matches(PASSWORD_PATTERN))
+//            throw new BaseException(INVALID_PASSWORD_FORMAT);
+        if(userRepository.findByEmail(userJoinReq.getEmail()).isPresent())
+            throw new BaseException(POST_USERS_EXISTS_EMAIL);
         String encryptedPw = encoder.encode(userJoinReq.getPassword());
         UserEntity newUser = UserEntity.builder()
                 .email(userJoinReq.getEmail())
@@ -39,7 +51,7 @@ public class UserServiceV2 {
     public UserRes.UserJoinRes read(Long userId, HttpServletRequest request) throws Exception {
         // 방법 1. email header 에서 추출하여 UserEntity 찾기
         String email = request.getHeader("email"); // Header 에서 email 이라는 Key 의 Value 를 가져옴. 보통 JWT 토큰 사용
-        UserEntity newUser = userRepository.findByEmail(email).orElseThrow(() -> new Exception("해당 사용자를 찾을 수 없습니다"));
+        UserEntity newUser = userRepository.findByEmail(email).orElseThrow(() -> new BaseException(USERS_EMPTY_USER_ID));
         log.info(email); // 추출한 email 확인
 
         // 방법 2. userId 로 UserEntity 찾기
