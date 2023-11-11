@@ -34,7 +34,7 @@ public class UserService {
                 .role(RoleType.USER)
                 .build();
 
-        return userRepository.saveAndFlush(newUser);
+        return userRepository.save(newUser);
     }
 
     public UserEntity read(UserDTO user, HttpServletRequest request) throws Exception {
@@ -60,13 +60,13 @@ public class UserService {
             String encryptedPw = encoder.encode(user.getPassword());
             userEntity.setPassword(encryptedPw);
         }
-        return userRepository.saveAndFlush(userEntity);
+        return userRepository.save(userEntity);
     }
 
     public UserEntity delete1(Long userId) throws Exception {
         UserEntity userEntity = userRepository.findById(userId).orElseThrow(() -> new Exception("해당 사용자를 찾을 수 없습니다"));
         userEntity.setStatus('D');
-        return userRepository.saveAndFlush(userEntity);
+        return userRepository.save(userEntity);
     }
 
     public HttpStatus delete2(Long userId) throws Exception {

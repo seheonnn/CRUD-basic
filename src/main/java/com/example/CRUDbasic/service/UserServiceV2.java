@@ -33,7 +33,7 @@ public class UserServiceV2 {
                 .role(RoleType.USER)
                 .build();
 
-        return new UserRes.UserJoinRes(userRepository.saveAndFlush(newUser));
+        return new UserRes.UserJoinRes(userRepository.save(newUser));
     }
 
     public UserRes.UserJoinRes read(Long userId, HttpServletRequest request) throws Exception {
@@ -58,13 +58,13 @@ public class UserServiceV2 {
             userEntity.setPassword(encryptedPw);
         }
 
-        return new UserRes.UserJoinRes(userRepository.saveAndFlush(userEntity));
+        return new UserRes.UserJoinRes(userRepository.save(userEntity));
     }
 
     public UserRes.UserJoinRes delete1(Long userId) throws Exception {
         UserEntity userEntity = userRepository.findById(userId).orElseThrow(() -> new Exception("해당 사용자를 찾을 수 없습니다"));
         userEntity.setStatus('D');
-        return new UserRes.UserJoinRes(userRepository.saveAndFlush(userEntity));
+        return new UserRes.UserJoinRes(userRepository.save(userEntity));
     }
 
     public HttpStatus delete2(Long userId) throws Exception {

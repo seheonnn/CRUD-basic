@@ -7,7 +7,7 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public enum RoleType {
 
-    USER(0, "USER"),
+    USER(0, "USER"), // 0 : USER, 1 : MANAGER
     MANAGER(1, "MANAGER");
 
     private final Integer value;
