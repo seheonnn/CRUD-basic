@@ -1,6 +1,7 @@
 package com.example.CRUDbasic.service;
 
 import com.example.CRUDbasic.config.RoleType;
+import com.example.CRUDbasic.converter.UserConverter;
 import com.example.CRUDbasic.dto.UserReq;
 import com.example.CRUDbasic.dto.UserRes;
 import com.example.CRUDbasic.entities.UserEntity;
@@ -33,7 +34,11 @@ public class UserServiceV2 {
                 .role(RoleType.USER)
                 .build();
 
-        return new UserRes.UserJoinRes(userRepository.save(newUser));
+        // 성능적인 면에선 큰 차이 X
+        // 생성자 방식: 코드가 간결, 필드가 많아지면 복잡해짐
+        // Converter: 덜 명시적일 수도, 변환 로직이 한곳에 모여 있어 확장성이 좋음.
+//        return new UserRes.UserJoinRes(userRepository.save(newUser)); // 생성자 이용 DTO 변환
+        return UserConverter.toUserDto(newUser); // Converter 이용 DTO 변환
     }
 
     public UserRes.UserJoinRes read(Long userId, HttpServletRequest request) throws Exception {

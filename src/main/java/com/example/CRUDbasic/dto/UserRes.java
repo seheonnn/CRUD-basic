@@ -2,14 +2,16 @@ package com.example.CRUDbasic.dto;
 
 import com.example.CRUDbasic.config.RoleType;
 import com.example.CRUDbasic.entities.UserEntity;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 import java.time.LocalDateTime;
 
 public class UserRes {
     @Getter
     @Setter
+    @Builder // Converter 에서 builder 패턴 이용
+    @AllArgsConstructor(access = AccessLevel.PROTECTED) // Builder 사용 시 모든 파라미터를 갖는 생성자를 필요로 함
+//    @NoArgsConstructor(access = AccessLevel.PROTECTED)
     public static class UserJoinRes {
         private String email;
         private String name;
