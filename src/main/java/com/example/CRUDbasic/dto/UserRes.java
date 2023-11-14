@@ -1,10 +1,7 @@
 package com.example.CRUDbasic.dto;
 
-import com.example.CRUDbasic.config.RoleType;
 import com.example.CRUDbasic.entities.UserEntity;
 import lombok.*;
-
-import java.time.LocalDateTime;
 
 public class UserRes {
     @Getter

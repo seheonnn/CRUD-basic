@@ -1,7 +1,6 @@
 package com.example.CRUDbasic.config;
 
 import com.fasterxml.jackson.annotation.JsonValue;
-import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor

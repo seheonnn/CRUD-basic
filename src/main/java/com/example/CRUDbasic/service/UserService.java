@@ -6,13 +6,11 @@ import com.example.CRUDbasic.entities.UserEntity;
 import com.example.CRUDbasic.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.Optional;
 
 @Slf4j // 로그 확인 위한 어노테이션
 @Service

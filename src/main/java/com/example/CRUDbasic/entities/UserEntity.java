@@ -1,16 +1,13 @@
 package com.example.CRUDbasic.entities;
 
 import com.example.CRUDbasic.config.RoleType;
-import com.example.CRUDbasic.dto.UserDTO;
 import lombok.*;
 import org.hibernate.annotations.ColumnDefault;
-import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
-import java.time.LocalDateTime;
 
 @Entity(name = "User")
 @Table(name = "User")

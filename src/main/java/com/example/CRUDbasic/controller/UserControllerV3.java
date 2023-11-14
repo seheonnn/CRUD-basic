@@ -6,10 +6,10 @@ import com.example.CRUDbasic.entities.LogEntity;
 import com.example.CRUDbasic.global.BaseException;
 import com.example.CRUDbasic.global.BaseResponse;
 import com.example.CRUDbasic.service.UserServiceV3;
+import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
@@ -24,6 +24,13 @@ public class UserControllerV3 {
 //    private UserService userService;
 
     // C
+    // @ApiOperation 이용하여 Swagger 에 설명을 추가할 수 있음.
+    @ApiOperation(value = "회원 가입", notes = "ex)\n\n " +
+            "{\n" +
+            "    \"email\": \"abc123@naver.com\",\n" +
+            "    \"password\": \"abc123\",\n" +
+            "    \"name\": \"짱구\"\n" +
+            "}")
     @PostMapping("/create")
     public BaseResponse<UserRes.UserJoinRes> create(@RequestBody UserReq.UserJoinReq userJoinReq) throws BaseException {
         log.info("GET /api/v3/users/create 요청처리 시작");
@@ -35,6 +42,8 @@ public class UserControllerV3 {
     }
 
     // R
+    @ApiOperation(value = "회원 정보 가져오기", notes = "ex)\n\n " +
+            " http://localhost:8080/api/v3/users/1 ")
     @GetMapping("/{userId}")
     public BaseResponse<UserRes.UserJoinRes> read(@PathVariable Long userId, HttpServletRequest request) throws Exception {
         return new BaseResponse<>(userService.read(userId, request));
