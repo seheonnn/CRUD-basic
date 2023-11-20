@@ -1,6 +1,12 @@
 package com.example.CRUDbasic.config;
 
-
+import io.swagger.v3.oas.models.Components;
+import io.swagger.v3.oas.models.OpenAPI;
+import io.swagger.v3.oas.models.info.Info;
+import io.swagger.v3.oas.models.security.SecurityRequirement;
+import io.swagger.v3.oas.models.security.SecurityScheme;
+import io.swagger.v3.oas.models.servers.Server;
+import org.springdoc.core.GroupedOpenApi;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.bind.annotation.RestController;
@@ -17,52 +23,37 @@ import springfox.documentation.spring.web.plugins.Docket;
 import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
+
 @Configuration
-@EnableSwagger2
 public class SwaggerConfig {
 
-    public static final String AUTHORIZATION_HEADER = "Authorization";
-
+    // http://localhost:8080/swagger-ui/index.html#/
     @Bean
-    public Docket api() {
-        return new Docket(DocumentationType.OAS_30)
-                .securityContexts(Arrays.asList(securityContext()))
-                .securitySchemes(Arrays.asList(apiKey()))
-                .select()
-                .apis(RequestHandlerSelectors.withClassAnnotation(RestController.class))
-//                .apis(RequestHandlerSelectors.basePackage("com.example.CRUDbasic")) // 해당 경로만 swagger 접근
-                .paths(PathSelectors.any()) // 모든 경로 swagger 접근 허용
-                .build().apiInfo(apiInfo());
-    }
+    public OpenAPI UMCstudyAPI() {
+        Info info = new Info()
+                .title("API 명세서 제목")
+                .description("API 명세서 설명")
+                .version("1.0.0");
 
+        String jwtSchemeName = "email";
+        // API 요청헤더에 인증정보 포함
+        SecurityRequirement securityRequirement = new SecurityRequirement().addList(jwtSchemeName);
 
-    private SecurityContext securityContext() {
-        return SecurityContext.builder()
-                .securityReferences(defaultAuth())
-                .build();
-    }
+        // SecuritySchemes 등록
+        Components components = new Components()
+                .addSecuritySchemes(jwtSchemeName, new SecurityScheme()
+                        .name(jwtSchemeName)
+                        .type(SecurityScheme.Type.HTTP) // HTTP 방식
+                        .scheme("bearer")
+                        .bearerFormat("JWT"));
 
-
-    private List<SecurityReference> defaultAuth() {
-        AuthorizationScope authorizationScope = new AuthorizationScope("global", "accessEverything");
-        AuthorizationScope[] authorizationScopes = new AuthorizationScope[1];
-        authorizationScopes[0] = authorizationScope;
-        return Arrays.asList(new SecurityReference("email", authorizationScopes));
-    }
-
-
-    private ApiKey apiKey() {
-        return new ApiKey("email", "email", "header");
-    }
-
-
-    private ApiInfo apiInfo() {
-        return new ApiInfoBuilder()
-                .title("Swagger Documentation title")
-                .description("API Documentation")
-                .version("1.0")
-                .build();
+        return new OpenAPI()
+                .addServersItem(new Server().url("/"))
+                .info(info)
+                .addSecurityItem(securityRequirement)
+                .components(components);
     }
 }

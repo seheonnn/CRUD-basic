@@ -13,6 +13,10 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.ArrayList;
+import java.util.Enumeration;
+import java.util.HashMap;
+import java.util.Map;
 
 @Slf4j
 @RestController
@@ -34,7 +38,7 @@ public class UserControllerV3 {
     @PostMapping("/create")
     public BaseResponse<UserRes.UserJoinRes> create(@RequestBody UserReq.UserJoinReq userJoinReq) throws BaseException {
         log.info("GET /api/v3/users/create 요청처리 시작");
-        log.info("{}", new LogEntity(1L, "GET /api/v1/users/create", "요청처리 시작"));
+        log.info("{}", new LogEntity(1L, "GET /api/v3/users/create", "요청처리 시작"));
         UserRes.UserJoinRes userJoinRes = userService.create(userJoinReq);
         log.info("GET /api/v3/users/create 요청처리 완료 > 생성된 유저 : {}", userJoinRes);
 //        return ResponseEntity.ok("유저 생성 완료.");
@@ -46,6 +50,17 @@ public class UserControllerV3 {
             " http://localhost:8080/api/v3/users/1 ")
     @GetMapping("/{userId}")
     public BaseResponse<UserRes.UserJoinRes> read(@PathVariable Long userId, HttpServletRequest request) throws Exception {
+        log.info("===================");
+        Enumeration<String> headerNames = request.getHeaderNames();
+        Map<String, String> headers = new HashMap<>();
+
+        while (headerNames.hasMoreElements()) {
+            String headerName = headerNames.nextElement();
+            String headerValue = request.getHeader(headerName);
+            headers.put(headerName, headerValue);
+        }
+        System.out.println("Headers received: " + headers);
+        log.info("===================");
         return new BaseResponse<>(userService.read(userId, request));
     }
 

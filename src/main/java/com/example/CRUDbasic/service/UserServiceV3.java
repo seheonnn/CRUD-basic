@@ -37,14 +37,8 @@ public class UserServiceV3 {
 //            throw new BaseException(INVALID_PASSWORD_FORMAT);
         if(userRepository.findByEmail(userJoinReq.getEmail()).isPresent())
             throw new BaseException(POST_USERS_EXISTS_EMAIL);
-        String encryptedPw = encoder.encode(userJoinReq.getPassword());
-        UserEntity newUser = UserEntity.builder()
-                .email(userJoinReq.getEmail())
-                .password(encryptedPw)
-                .name(userJoinReq.getName())
-                .status('A')
-                .role(RoleType.USER)
-                .build();
+
+        UserEntity newUser = UserConverter.toUser(userJoinReq);
 
         // 성능적인 면에선 큰 차이 X
         // 생성자 방식: 코드가 간결, 필드가 많아지면 복잡해짐
