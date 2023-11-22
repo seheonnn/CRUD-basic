@@ -60,7 +60,6 @@ public class UserControllerV3 {
             headers.put(headerName, headerValue);
         }
         System.out.println("Headers received: " + headers);
-        log.info(request.getHeader("authorization"));
         log.info("===================");
         return new BaseResponse<>(userService.read(userId, request));
     }

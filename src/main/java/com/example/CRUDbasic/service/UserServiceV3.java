@@ -49,7 +49,8 @@ public class UserServiceV3 {
 
     public UserRes.UserJoinRes read(Long userId, HttpServletRequest request) throws Exception {
         // 방법 1. email header 에서 추출하여 UserEntity 찾기
-        String email = request.getHeader("email"); // Header 에서 email 이라는 Key 의 Value 를 가져옴. 보통 JWT 토큰 사용
+//        String email = request.getHeader("email"); // Header 에서 email 이라는 Key 의 Value 를 가져옴. 보통 JWT 토큰 사용
+        String email = request.getHeader("authorization").split(" ")[1];
         UserEntity newUser = userRepository.findByEmail(email).orElseThrow(() -> new BaseException(USERS_EMPTY_USER_ID));
         log.info(email); // 추출한 email 확인
 
