@@ -50,7 +50,7 @@ public class UserControllerV3 {
             " http://localhost:8080/api/v3/users/1 ")
     @GetMapping("/{userId}")
     public BaseResponse<UserRes.UserJoinRes> read(@PathVariable Long userId, HttpServletRequest request) throws Exception {
-        log.info("===================");
+        log.info("========= 헤더 정보 확인 ==========");
         Enumeration<String> headerNames = request.getHeaderNames();
         Map<String, String> headers = new HashMap<>();
 
@@ -60,7 +60,7 @@ public class UserControllerV3 {
             headers.put(headerName, headerValue);
         }
         System.out.println("Headers received: " + headers);
-        log.info("===================");
+        log.info("================================");
         return new BaseResponse<>(userService.read(userId, request));
     }
 

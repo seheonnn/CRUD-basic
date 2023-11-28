@@ -6,7 +6,7 @@ import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
 @SpringBootApplication
-@EnableJpaAuditing
+@EnableJpaAuditing // BaseEntity 관련
 public class CrudBasicApplication {
 
 	public static void main(String[] args) {

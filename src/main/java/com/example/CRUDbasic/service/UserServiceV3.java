@@ -21,8 +21,10 @@ import static com.example.CRUDbasic.global.BaseResponseStatus.*;
 @Service
 @RequiredArgsConstructor // V3 : Response 객체, Exception Handler 추가
 public class UserServiceV3 {
-    private final UserRepository userRepository;
-//    @Autowired
+
+    // 의존성 주입 방식
+    private final UserRepository userRepository; // 생성자 주입 / 순환 참조 방지
+//    @Autowired // 필드 주입
 //    private UserRepository userRepository;
 
 //    static final String PASSWORD_PATTERN = "^(?=.*[a-z])(?=.*[A-Z]+)(?=.*\\d)(?=.*[!@#$%^&*]).{8,64}$"; // 8자 이상 64자 이하, 대소문자, 특수문자 각각 한 번씩 포함
