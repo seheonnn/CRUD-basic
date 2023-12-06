@@ -15,7 +15,6 @@ public class UserRes {
         private String name;
         private char status;
         private RoleType role;
-
         public UserJoinRes(UserEntity user) {
             this.email = user.getEmail();
             this.name = user.getName();
