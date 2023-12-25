@@ -9,6 +9,7 @@ import com.example.CRUDbasic.service.UserServiceV3;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.boot.autoconfigure.data.redis.RedisProperties;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
@@ -27,6 +28,8 @@ public class UserControllerV3 {
 //    @Autowired
 //    private UserService userService;
 
+
+    private final RedisProperties redisProperties;
     // C
     // @ApiOperation 이용하여 Swagger 에 설명을 추가할 수 있음.
     @ApiOperation(value = "회원 가입", notes = "ex)\n\n " +
@@ -42,6 +45,10 @@ public class UserControllerV3 {
         UserRes.UserJoinRes userJoinRes = userService.create(userJoinReq);
         log.info("GET /api/v3/users/create 요청처리 완료 > 생성된 유저 : {}", userJoinRes);
 //        return ResponseEntity.ok("유저 생성 완료.");
+
+        log.info(redisProperties.getHost());
+        log.info(String.valueOf(redisProperties.getPort()));
+
         return new BaseResponse<>(userJoinRes);
     }
 
