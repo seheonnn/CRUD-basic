@@ -39,14 +39,6 @@ jobs:
     needs: ci
 
     steps:
-      - name: Checkout
-        uses: actions/checkout@v3
-
-      - name: Set up JDK 17
-        uses: actions/setup-java@v2
-        with:
-          java-version: '17'
-          distribution: 'temurin'
 
       # Docker image Build (1)
       - name: Docker image build
