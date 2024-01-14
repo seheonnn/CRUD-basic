@@ -39,6 +39,6 @@ FROM openjdk:17-alpine
 WORKDIR /usr/src/app
 
 # 빌드한 jar 파일을 Docker 컨테이너 내부로 옮겨줌.
-COPY ./build/libs/*.jar app.jar
+COPY ./build/libs/*-SNAPSHOT.jar app.jar
 
 CMD ["java","-jar","app.jar"]
