@@ -55,7 +55,7 @@ jobs:
       - name: Docker image build
         run: |
           cd ../../../
-          docker build -t ${{ secrets.DOCKER_USERNAME }}/crud-docker --pull --no-cache . 
+          docker build -t ${{ secrets.DOCKER_USERNAME }}/crud-docker --pull --no-cache -f ./Dockerfile . 
 
       # Docker Hub push (3)
       - name: Docker Hub push
