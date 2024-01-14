@@ -7,6 +7,12 @@ import com.example.CRUDbasic.global.BaseException;
 import com.example.CRUDbasic.global.BaseResponse;
 import com.example.CRUDbasic.service.UserServiceV3;
 import io.swagger.annotations.ApiOperation;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.Parameters;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.autoconfigure.data.redis.RedisProperties;
@@ -14,6 +20,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.HashMap;
@@ -32,14 +39,21 @@ public class UserControllerV3 {
     private final RedisProperties redisProperties;
     // C
     // @ApiOperation 이용하여 Swagger 에 설명을 추가할 수 있음.
-    @ApiOperation(value = "회원 가입", notes = "ex)\n\n " +
-            "{\n" +
-            "    \"email\": \"abc123@naver.com\",\n" +
-            "    \"password\": \"abc123\",\n" +
-            "    \"name\": \"짱구\"\n" +
-            "}")
+    @Operation(summary = "회원가입 API", description = "ex)\n\n " +
+        "{\n\n" +
+        "    \"email\": \"test123@naver.com\",\n\n" +
+        "    \"password\": \"test123\",\n\n" +
+        "    \"name\": \"홍길동\"\n\n" +
+        "}")
+    // Swagger. 해당 API 의 응답을 담음
+    @ApiResponses({
+        @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "COMMON200", description = "OK, 성공"),
+        @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "AUTH003", description = "access 토큰을 주세요!", content = @Content(schema = @Schema(implementation = BaseResponse.class))),
+        @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "AUTH004", description = "acess 토큰 만료", content = @Content(schema = @Schema(implementation = BaseResponse.class))),
+        @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "AUTH006", description = "acess 토큰 모양이 이상함", content = @Content(schema = @Schema(implementation = BaseResponse.class))),
+    })
     @PostMapping("/create")
-    public BaseResponse<UserRes.UserJoinRes> create(@RequestBody UserReq.UserJoinReq userJoinReq) throws BaseException {
+    public BaseResponse<UserRes.UserJoinRes> create(@RequestBody @Valid UserReq.UserJoinReq userJoinReq) throws BaseException {
         log.info("GET /api/v3/users/create 요청처리 시작");
         log.info("{}", new LogEntity(1L, "GET /api/v3/users/create", "요청처리 시작"));
         UserRes.UserJoinRes userJoinRes = userService.create(userJoinReq);
