@@ -71,12 +71,14 @@ jobs:
             sudo docker rm crud-docker
             sudo docker rmi ${{ secrets.DOCKER_USERNAME }}/crud-docker
             sudo docker pull ${{ secrets.DOCKER_USERNAME }}/crud-docker
+            sudo docker pull ${{ secrets.DOCKER_USERNAME }}/crud-docker
+            sudo docker run -d --name crud-docker -p 8080:8080 ${{ secrets.DOCKER_USERNAME }}/crud-docker
 
 #            sudo docker stop my-redis
 #            sudo docker rm my-redis
 #            sudo docker rmi redis
 
-            sudo docker pull redis
-            sudo docker network create my-network
-            sudo docker run --name my-redis --network my-network -d redis
-            sudo docker run -it -d -p 8080:8080 --name crud-docker -e TZ=Asia/Seoul --network my-network ${{ secrets.DOCKER_USERNAME }}/crud-docker
+#            sudo docker pull redis
+#            sudo docker network create my-network
+#            sudo docker run --name my-redis --network my-network -d redis
+#            sudo docker run -it -d -p 8080:8080 --name crud-docker -e TZ=Asia/Seoul --network my-network ${{ secrets.DOCKER_USERNAME }}/crud-docker
