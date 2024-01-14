@@ -28,5 +28,5 @@
 
 
 FROM openjdk:17-jdk
-COPY JAR_FILE=build/libs/*.jar app.jar
+COPY build/libs/*.jar app.jar
 ENTRYPOINT ["java", "-Dspring.profiles.active=docker", "-jar", "app.jar"]
