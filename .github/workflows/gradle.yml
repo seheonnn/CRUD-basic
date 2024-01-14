@@ -21,7 +21,7 @@ jobs:
 
       - name: Make application.yml
         run: |
-          mkdir -p src/main/resources
+          mkdir src/main/resources
           echo "${{ secrets.APPLICATION_YML }}" > src/main/resources/application.yml
           find src
         
