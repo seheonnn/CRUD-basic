@@ -21,9 +21,13 @@ jobs:
 
       - name: Make application.yml
         run: |
-          cd ./src/main/resources
-          touch ./application.yml
-          echo "${{ secrets.APPLICATION_YML }}" > ./application.yml
+          mkdir -p src/main/resources
+          echo "${{ secrets.APPLICATION_YML }}" > src/main/resources/application.yml
+          find src
+        
+          # cd ./src/main/resources
+          # touch ./application.yml
+          # echo "${{ secrets.APPLICATION_YML }}" > ./application.yml
 
       - name: Grant execute permission for gradlew and build
         run: |
@@ -44,16 +48,16 @@ jobs:
           java-version: '17'
           distribution: 'temurin'
 
-          # DockerHub Login (2)
+      # Docker image Build (1)
+      - name: Docker image build
+        run: docker build -t ${{ secrets.DOCKER_USERNAME }}/crud-docker --pull --no-cache . 
+
+        # DockerHub Login (2)
       - name: Docker login
         uses: docker/login-action@v2
         with:
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
-
-      # Docker image Build (1)
-      - name: Docker image build
-        run: docker build -t ${{ secrets.DOCKER_USERNAME }}/crud-docker --pull --no-cache . 
 
       # Docker Hub push (3)
       - name: Docker Hub push
