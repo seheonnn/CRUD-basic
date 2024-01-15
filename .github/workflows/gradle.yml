@@ -24,9 +24,6 @@ jobs:
           touch ./application.yml
           echo "${{ secrets.APPLICATION_YML }}" > ./application.yml
 
-      - name: Build JAR
-        run: ./gradlew clean build -x test
-
   CD:
     runs-on: ubuntu-latest
     needs: ci
@@ -40,8 +37,11 @@ jobs:
           java-version: '17'
           distribution: 'temurin'
 
-      - name: Copy JAR to Docker Context
-        run: cp ./build/libs/*.jar $GITHUB_WORKSPACE
+      # - name: Copy JAR to Docker Context
+      #   run: cp ./build/libs/*.jar $GITHUB_WORKSPACE
+
+      - name: Build JAR
+        run: ./gradlew clean build -x test
 
       - name: Docker image build
         run: docker build -t ${{ secrets.DOCKER_USERNAME }}/crud-docker --pull --no-cache .
