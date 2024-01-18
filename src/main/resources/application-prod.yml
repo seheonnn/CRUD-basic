@@ -1,0 +1,35 @@
+spring:
+  # swagger
+  mvc:
+    pathmatch:
+      matching-strategy: ant_path_matcher
+
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: ${url} # RDS 연결시 url, username, pw 변경
+    username: ${username}
+    password: ${password}
+
+#    url: jdbc:mysql://127.0.0.1:3306/CRUD # RDS 연결시 url, username, pw 변경
+#    username: root
+#    password: 12345678
+
+  jpa:
+    show-sql: true
+    hibernate:
+      ddl-auto: create
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQL8Dialect
+        show_sql: false # hibernate 로그 남길지
+
+logging:
+  level:
+    #    org.hibernate.SQL: OFF
+    #    org.hibernate.SQL: DEBUG
+    org.hibernate.SQL: TRACE
+
+# Redis 설정
+redis:
+  host: 0.0.0.0
+  port: 6379

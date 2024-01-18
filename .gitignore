@@ -6,7 +6,7 @@ build/
 !**/src/test/**/build/
 
 # Ignore application.yml file
-*.yml
+*-local.yml
 
 ### STS ###
 .apt_generated
