@@ -90,11 +90,6 @@ jobs:
             sudo docker rmi ${{ secrets.DOCKER_USERNAME }}/spring-docker
             sudo docker pull ${{ secrets.DOCKER_USERNAME }}/spring-docker
 
-#            sudo docker stop my-redis
-#            sudo docker rm my-redis
-#            sudo docker rmi redis
-
-#            sudo docker pull redis
             sudo docker network create my-network
             sudo docker run --name my-redis --network my-network -d redis
             sudo docker run -e SPRING_PROFILES_ACTIVE=prod -it -d -p 8080:8080 --name spring-docker -e TZ=Asia/Seoul --network my-network ${{ secrets.DOCKER_USERNAME }}/spring-docker
