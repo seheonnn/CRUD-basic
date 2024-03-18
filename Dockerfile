@@ -27,5 +27,6 @@
 #CMD ["java","-jar","CRUD-basic-0.0.1-SNAPSHOT.jar"]
 
 FROM openjdk:17-jdk
-COPY ./build/libs/*.jar app.jar
-ENTRYPOINT ["java", "-Dspring.profiles.active=prod", "-jar", "app.jar"]
+ARG JAR_FILE=./api/build/libs/*.jar
+COPY ${JAR_FILE} app.jar
+ENTRYPOINT ["java", "-Dspring.profiles.active=prod", "-jar", "/app.jar"]
