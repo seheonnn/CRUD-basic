@@ -6,9 +6,9 @@ spring:
 
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: ${url} # RDS 연결시 url, username, pw 변경
-    username: ${username}
-    password: ${password}
+    url: ${DB_URL} # RDS 연결시 url, username, pw 변경
+    username: ${DB_USER}
+    password: ${DB_PW}
 
 #    url: jdbc:mysql://127.0.0.1:3306/CRUD # RDS 연결시 url, username, pw 변경
 #    username: root
